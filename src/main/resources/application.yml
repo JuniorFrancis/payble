@@ -1,0 +1,36 @@
+server:
+    port: 8080
+
+spring:
+  application:
+    name: "payble"
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/payble
+    username: root
+    password: password
+    dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        ddl-auto: create
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      request-timeout: 30_000
+      group-id: payble
+      auto-offset-reset: earliest
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      topicIn: payble-queue-data-receiver-query
+      paymentTopicIn: payble-queue-data-payments-query
